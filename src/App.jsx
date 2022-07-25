@@ -15,8 +15,8 @@ function App() {
           <Link to="logIn"> Log In</Link>
         </button>
         <Routes>
-          <Route path="/logIn" element={<Login />}></Route>
-          <Route path="/SignUp" element={<SignUp />}></Route>
+          <Route path="/logIn" element={<Login />}/>
+          <Route path="/SignUp" element={<SignUp />}/>
         </Routes>
       </BrowserRouter>
     </div>

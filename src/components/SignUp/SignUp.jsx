@@ -4,6 +4,7 @@ import { addUser } from "../../services/ApiManager";
 
 const SignUp = () => {
   const [user, setNewUser] = useState({ email: "", password: "" });
+  const [secondPassword, setSecondPassword] = useState("");
 
   const handleInput = function (property, value) {
     const newUser = { ...user };
@@ -11,13 +12,21 @@ const SignUp = () => {
     setNewUser(newUser);
   };
   const handleClick = async function () {
-    if (!user.email || !user.password) {alert("Please Check If you have entered your email and password")};
-    try {
-      await addUser(user);
-      setNewUser({ email: "", password: "" });
-    } catch (error) {
-      alert(JSON.stringify(error));
+    if (!user.email || !user.password) {
+      alert("Please Check If you have entered your email and password");
+    }else if (user.password !== secondPassword) {
+      alert("Make sure you passwords match")
+    } else {
+      try {
+        await addUser(user);
+        setNewUser({ email: "", password: "" });
+        setSecondPassword("")
+      } catch (error) {
+       console.log(JSON.stringify(error));
+       
+      }
     }
+  
   };
   return (
     <div>
@@ -39,6 +48,18 @@ const SignUp = () => {
         value={user.password}
         placeholder="Password"
         onChange={(e) => handleInput("password", e.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            handleClick();
+          }
+        }}
+      />
+      <br />
+      <input
+        type="text"
+        value={secondPassword}
+        placeholder="Password"
+        onChange={(e) => setSecondPassword(e.target.value)}
         onKeyDown={(event) => {
           if (event.key === "Enter") {
             handleClick();
